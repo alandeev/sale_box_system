@@ -1,0 +1,23 @@
+{
+  "name": "sale_box_system",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/alandev2/sale_box_system.git",
+  "author": "Alan F <alanworking1@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon ./src/server"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "consign": "^0.1.6",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "pg": "^8.5.1",
+    "sequelize": "^6.3.5",
+    "sequelize-cli": "^6.2.0",
+    "uuidv4": "^6.2.5"
+  }
+}
