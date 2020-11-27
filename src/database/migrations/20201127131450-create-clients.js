@@ -16,9 +16,14 @@ module.exports = {
           model: "users",
           key: "id"
         },
-        allowNull: false
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        unique: true
+      },
       phone: DataTypes.STRING,
       created_at: DataTypes.DATE,
       updated_at: DataTypes.DATE

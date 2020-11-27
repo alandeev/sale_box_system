@@ -1,13 +1,26 @@
-const User = require('../models/User');
+const Client = require('../models/Client');
 
 class ClientController{
   async index(req, res){
-    const users = await User.findAll();
-    return res.json(users);
+    const clients = await Client.findAll({
+      include: {
+        association: 'address'
+      }
+    });
+    return res.json(clients);
   }
 
   async create(req, res){
-    res.send("CREATE");
+    try{
+      const client = await Client.create({
+        user_id: req.requester.id,
+        ...req.body
+      })
+      
+      return res.json(client);
+    }catch(err){
+      return res.status(400).json({ errors: err.errors.map(error => error.message) });
+    }
   }
 }
 

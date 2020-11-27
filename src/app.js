@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const consign = require('consign');
 
 //stating database
 require('./database/database');
@@ -10,7 +9,6 @@ class App{
     this.app = express();
     this.middlewares();
     this.routes();
-    consign().include('./src/routers/').into(this.app);
   }
 
   middlewares(){
@@ -19,6 +17,8 @@ class App{
   }
 
   routes(){
+    this.app.use('/', require('./routers/auth'));
+    this.app.use('/users', require('./routers/user'));
     this.app.get('/oauth', require('./middleware'), (req, res) => res.json(req.requester));
   }
 }

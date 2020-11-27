@@ -13,18 +13,27 @@ class Client extends Model {
           },
           validate: {
             len: {
-              args: [4, 20],
-              msg: "Field name must have be from 4 to 20 characters",
+              args: [2, 30],
+              msg: "Field name must have be from 2 to 30 characters",
             },
           },
         },
         phone: {
           type: DataTypes.STRING,
           defaultValue: "",
+          validate: {
+            len: {
+              args: [2, 30],
+              msg: "Field phone must have be from 2 to 30 characters",
+            }
+          }
         },      
       },
       { sequelize }
     );
+    this.addHook('beforeCreate', (client) => {
+      if(client.name) client.name = client.name.toLowerCase();
+    })
   }
 
   static associate(models){

@@ -7,4 +7,4 @@ const controller = require('../controllers/auth');
 routes.post('/auth', controller.authenticate);
 routes.post('/signup', controller.signup);
 
-module.exports = (app) => app.use('/', routes);
+module.exports = routes;
