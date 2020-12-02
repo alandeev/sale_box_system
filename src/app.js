@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const { resolve } = require('path');
 
 //stating database
 require('./database/database');
@@ -14,6 +15,7 @@ class App{
   middlewares(){
     this.app.use(express.json());
     this.app.use(cors());
+    this.app.use('/images', express.static(resolve(__dirname, '..', 'uploads', 'images')));
   }
 
   routes(){
