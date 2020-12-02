@@ -46,6 +46,11 @@ class Product extends Model {
       if(product.name) product.name = product.name.toLowerCase();
     })
   }
+
+  static associate(models){
+    this.belongsTo(models.User, { foreignKey: 'created_by', as: 'owner' });
+    this.hasOne(models.Photo, { foreignKey: 'product_id', as: 'profile' });
+  }
 }
 
 module.exports = Product;

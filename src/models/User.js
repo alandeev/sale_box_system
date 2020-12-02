@@ -58,6 +58,7 @@ class User extends Model {
 
   static associate(models){
     this.hasMany(models.Client, { foreignKey: 'user_id', as: 'clients' });
+    this.hasMany(models.Product, { foreignKey: 'created_by', as: 'products' });
   }
 
   password_is_valid(password) {

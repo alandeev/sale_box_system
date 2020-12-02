@@ -1,4 +1,12 @@
 const Model = require('../models/Product');
+const Photo = require('../models/Photo');
+
+const fs = require('fs');
+
+const cfg = require('../configs/multer');
+const multer = require('multer');
+
+const upload = multer(cfg).single('file');
 
 class Product {
   async store(req, res){
@@ -18,9 +26,48 @@ class Product {
   }
 
   async index(req, res){
-    const products = await Model.findAll();
+    const products = await Model.findAll({
+      include: {
+        model: Photo,
+        as: 'profile',
+        attributes: ['filename', 'originalname', 'created_at']
+      },
+      attributes: ['name', 'description', 'price', 'created_at']
+    });
 
-    res.json(products);
+    return res.json(products);
+  }
+
+  async upload(req, res){
+    const { product_id } = req.params;
+
+    const product = await Model.findByPk(product_id);
+    if(!product){
+      return res.status(400).json({ error: "Product not found" });
+    }
+
+    upload(req, res, async (err) => {
+      if(err){
+        return res.status(400).json({ error: "failed to upload image" })
+      }
+
+      const { originalname, filename, path } = req.file
+
+      const [ photo, created ] = await Photo.findOrCreate({
+        where: { product_id },
+        defaults: { originalname, filename, path,  product_id },
+        fields: ['product_id', 'originalname', 'filename', 'path']
+      })
+
+      if(!created){
+        fs.unlink(photo.path, () => {});
+        await photo.update({ originalname, filename, path }, {
+          fields: ['originalname', 'filename', 'path']
+        });
+      }
+
+      return res.json(photo);
+    });
   }
 }
 
