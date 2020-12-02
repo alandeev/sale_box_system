@@ -20,7 +20,11 @@ module.exports = {
         onDelete: 'CASCADE',
         onUpdate: 'CASCADE'
       },
-      name: DataTypes.STRING,
+      name: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false
+      },
       description: DataTypes.STRING,
       price: DataTypes.FLOAT,
       created_at: DataTypes.DATE,
