@@ -1,6 +1,5 @@
-Criar o Tebela/Model de Product que tem as informações do produto: como [ nome, preço, descrição ],
-depois criar um log de compra para o usuario e referenciar que o usuario comprou, tenho que
-analisar direito e verificar se o relacionamento é ManyToMany ou é um log referenciando no momento
-quando comprar e depois puxar tudo junto. ( até porque o Product não têm nada haver com o usuario );
+ProdutosxCarts PIVO
+CartsxClients PIVO
 
-Mais provavel ser log pelo que estou imaginando, mas tem que analisar, está meio confuso a relação.
+
+
