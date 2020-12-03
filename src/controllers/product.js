@@ -32,7 +32,7 @@ class Product {
         as: 'profile',
         attributes: ['filename', 'originalname', 'created_at']
       },
-      attributes: ['name', 'description', 'price', 'created_at']
+      attributes: ['name', 'description', 'price', 'created_at', 'id']
     });
 
     return res.json(products);
@@ -48,7 +48,7 @@ class Product {
 
     upload(req, res, async (err) => {
       if(err){
-        return res.status(400).json({ error: "failed to upload image" })
+        return res.status(400).json({ error: err.code })
       }
 
       const { originalname, filename, path } = req.file
