@@ -1,5 +1,5 @@
-ProdutosxCarts PIVO
-CartsxClients PIVO
+ProdutosxCarts PIVO ) OK
+CartsxClients PIVO  ) OK
 
 
-
+need creating pivo table to CLIENTxCART_PRODUCTS
