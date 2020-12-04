@@ -5,7 +5,7 @@ const Client = require('../models/Client');
 const Address = require('../models/Address');
 const Product = require('../models/Product');
 const Photo = require('../models/Photo');
-const Cart = require('../models/Cart');
+const Buy = require('../models/Buy');
 
 const configDB = require('../configs/database');
 
@@ -16,11 +16,11 @@ Client.init(connection);
 Address.init(connection);
 Product.init(connection);
 Photo.init(connection);
-Cart.init(connection);
+Buy.init(connection);
 
 User.associate(connection.models);
 Address.associate(connection.models);
 Client.associate(connection.models);
 Product.associate(connection.models);
 Photo.associate(connection.models);
-Cart.associate(connection.models);
+Buy.associate(connection.models);

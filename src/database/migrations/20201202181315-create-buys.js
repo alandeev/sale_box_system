@@ -4,38 +4,29 @@ const { DataTypes } = require('sequelize');
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.createTable('carts_products', {
+    await queryInterface.createTable('buys', {
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true
       },
-      product_id: {
+      client_id: {
         type: DataTypes.INTEGER,
         references: {
-          model: "products",
+          model: "clients",
           key: "id"
         },
         allowNull: false,
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onDelete: 'set null',
+        onUpdate: 'set null'
       },
-      cart_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "carts",
-          key: "id"
-        },
-        allowNull: false,
-        onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
-      },
+      is_paid: DataTypes.BOOLEAN,
       created_at: DataTypes.DATE,
       updated_at: DataTypes.DATE
     });
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('carts_products');
+    await queryInterface.dropTable('buys');
   }
 };

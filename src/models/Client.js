@@ -27,7 +27,7 @@ class Client extends Model {
               msg: "Field phone must have be from 2 to 30 characters",
             }
           }
-        },      
+        },
       },
       { sequelize }
     );
@@ -37,6 +37,7 @@ class Client extends Model {
   }
 
   static associate(models){
+    this.hasMany(models.Buy, { foreignKey: 'client_id', as: 'buys' });
     this.hasOne(models.Address, { foreignKey: 'client_id', as: 'address' });
     this.belongsTo(models.User, { foreignKey: 'user_id', as: 'owner' });
   }

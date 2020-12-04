@@ -50,10 +50,10 @@ class Product extends Model {
   static associate(models){
     this.belongsTo(models.User, { foreignKey: 'created_by', as: 'owner' });
     this.hasOne(models.Photo, { foreignKey: 'product_id', as: 'profile' });
-    this.belongsToMany(models.Cart, {
-      foreignKey: 'product_id',
-      as: "carts",
-      through: 'carts_products'
+    this.belongsToMany(models.Buy, {
+      foreignKey: 'buy_id',
+      as: "buys",
+      through: 'buys_products'
     });
   }
 }
