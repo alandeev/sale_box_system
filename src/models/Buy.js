@@ -1,4 +1,5 @@
 const { Model, DataTypes } = require("sequelize");
+const ProductBuy = require('./Product_Buy');
 
 class Buy extends Model {
   static init(sequelize) {
@@ -16,9 +17,9 @@ class Buy extends Model {
   static associate(models){
     this.belongsTo(models.Client, { foreignKey: "client_id", as: "client" });
     this.belongsToMany(models.Product, {
-      foreignKey: "buy_id",
-      as: "products",
-      through: "buys_products"
+      foreignKey: 'buy_id',
+      as: 'products',
+      through: 'products_buys'
     });
   }
 }

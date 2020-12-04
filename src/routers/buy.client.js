@@ -4,7 +4,7 @@ const routes = Router();
 
 const controller = require('../controllers/buy');
 
-routes.get('/', controller.index);
-routes.post('/', controller.create);
+routes.get('/:client_id/buys', controller.findAllProjects);
+routes.post('/:client_id/buys/:product_id', controller.findOrCreateAndAddProduct);
 
 module.exports = routes;

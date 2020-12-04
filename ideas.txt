@@ -3,3 +3,8 @@ CartsxClients PIVO  ) OK
 
 
 need creating pivo table to CLIENTxCART_PRODUCTS
+
+!!!!
+Preciso por um client_id no Model Cart porque se carts poderão ser implementado a qualquer cliente,
+porém eu posso está equivocado, pensando em uma lógica sem sentido, porque com o admin vai adi-
+cionar para o cliente o c
