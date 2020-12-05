@@ -33,7 +33,13 @@ class BuyController{
       }]
     });
 
-    const sub_total = buys.toJSON().products.reduce((previous, current) => previous.price + current.price);
+    if(!buys){
+      return res.status(400).json({ errors: ['buys not found'] });
+    }
+
+    const convert_to_json = buys.toJSON();
+
+    const sub_total = convert_to_json.products.length > 1 ? convert_to_json.products.reduce((previous, current) => previous.price + current.price) : convert_to_json.products[0].price;
 
     buys.setDataValue('price_total', sub_total);
 

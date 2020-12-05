@@ -13,10 +13,7 @@ class Address extends Model {
           validate: {
             notEmpty: {
               msg: "Field client_id is required"
-            },
-            onForeignConstraintError: (field, message, ...whatever) => {
-              message('client_id invalid or already registed.')
-            },
+            }
           }
         },
         cep: {
