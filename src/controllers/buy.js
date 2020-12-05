@@ -4,11 +4,11 @@ const Client = require('../models/Client');
 const Product = require('../models/Product');
 
 class BuyController{
-  async findAllProjects(req, res){
+  async find_buy_now(req, res){
     const { client_id } = req.params;
 
     const buys = await Buy.findOne({
-      where: { client_id },
+      where: { client_id, is_paid: false },
       attributes: ['id', 'is_paid', 'created_at'],
       include: [{
         model: Product,
@@ -75,6 +75,21 @@ class BuyController{
       }
       return res.status(400).json({ errors: err.errors.map(error => error.message) });
     }
+  }
+
+  async checkout(req, res){
+    const { client_id } = req.params;
+
+    const buys = await Buy.findOne({
+      where: { client_id, is_paid: false }
+    });
+
+    if(!buys){
+      return res.status(400).json({ errors: ['buys not found'] });
+    }
+
+    const response = await buys.set_paid(true);
+    return res.json(response);
   }
 }
 

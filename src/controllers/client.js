@@ -13,7 +13,8 @@ class ClientController{
         },
         {
           model: Buy,
-          as: 'buys'
+          as: 'buys',
+          attributes: ['is_paid']
         }
       ]
     });

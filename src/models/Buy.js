@@ -22,6 +22,11 @@ class Buy extends Model {
       through: 'products_buys'
     });
   }
+
+  async set_paid(is_paid){
+    this.is_paid = is_paid;
+    return await this.save();
+  }
 }
 
 module.exports = Buy;
