@@ -13,7 +13,6 @@ class AddressController{
   async create(req, res){
     try{
       const { client_id } = req.body;
-      console.log({client_id});
       const address = await Address.create({
         client_id,
         ...req.body

@@ -15,7 +15,7 @@ class AuthController {
       return res.status(400).json({ errors: ['Do you need send Password'] });
     }
 
-    const findUserByUsername = await User.findOne({ 
+    const findUserByUsername = await User.findOne({
       where: { username }
     });
 
@@ -32,7 +32,7 @@ class AuthController {
     })
 
     return res.json({ token: `Bearer ${token}` });
-    
+
   }
 
   async signup(req, res){
@@ -45,7 +45,7 @@ class AuthController {
       if(err.errors){
         return res.status(400).json({ errors: err.errors.map(error => error.message) });
       }
-      return res.status(400).json({ errros: [ err.message ] });
+      return res.status(400).json({ errors: [ err.message ] });
     }
   }
 }

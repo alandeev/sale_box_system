@@ -1,5 +1,4 @@
 const { Model, DataTypes } = require("sequelize");
-const ProductBuy = require('./Product_Buy');
 
 class Buy extends Model {
   static init(sequelize) {
