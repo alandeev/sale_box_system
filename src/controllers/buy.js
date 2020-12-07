@@ -2,9 +2,40 @@ const Address = require('../models/Address');
 const Buy = require('../models/Buy');
 const Client = require('../models/Client');
 const Product = require('../models/Product');
+const Product_Buy = require('../models/Product_Buy');
 
 class BuyController{
-  async find_buy_now(req, res){
+  async findAllBuyPaid(req, res){
+    const buys = await Buy.findAll({
+      where: { is_paid: true },
+      attributes: ['id', 'is_paid', 'created_at'],
+      include: [{
+        model: Product,
+        as: 'products',
+        attributes: ['name', 'description', 'price'],
+        include: {
+          association: 'profile',
+          attributes: ['filename', 'originalname'],
+        },
+        // through: {
+        //   attributes: []
+        // }
+      }, {
+        model: Client,
+        as: 'client',
+        attributes: ['name', 'phone'],
+        include: {
+          model: Address,
+          as: 'address',
+          attributes: ['cep', 'city', 'street', 'number']
+        }
+      }]
+    });
+
+    return res.json(buys);
+  }
+
+  async findBuyClientCurrent(req, res){
     const { client_id } = req.params;
 
     const buys = await Buy.findOne({
@@ -19,12 +50,13 @@ class BuyController{
           attributes: ['filename', 'originalname'],
         },
         through: {
-          attributes: []
+          attributes: ['qtd'],
+          as: 'count_product'
         }
       }, {
         model: Client,
         as: 'client',
-        attributes: ['name', 'phone'],
+        attributes: ['name', 'phone', 'id'],
         include: {
           model: Address,
           as: 'address',
@@ -37,16 +69,10 @@ class BuyController{
       return res.status(400).json({ errors: ['buys not found'] });
     }
 
-    const convert_to_json = buys.toJSON();
-
-    const sub_total = convert_to_json.products.length > 1 ? convert_to_json.products.reduce((previous, current) => previous.price + current.price) : convert_to_json.products[0].price;
-
-    buys.setDataValue('price_total', sub_total);
-
     return res.json(buys);
   }
 
-  async findOrCreateAndAddProduct(req, res){
+  async findOrCreateCartAndAddProduct(req, res){
     try{
       const { client_id, product_id } = req.params;
 
@@ -66,9 +92,16 @@ class BuyController{
         return res.status(400).json({ errors: ['product not found'] });
       }
 
-      await buy.addProduct(product);
+      const [ cart, created ] = await Product_Buy.findOrCreate({
+        where: { product_id: product.id, buy_id: buy.id },
+        default: { product_id: product.id, buy_id: buy.id, qtd: 1 }
+      });
 
-      return res.json(buy);
+      if(!created){
+        await cart.increment('qtd', { by: 1 });
+      }
+
+      return res.json(cart);
     }catch(err){
       if(!err.errors){
         return res.status(400).json({ errors: [ err.message ] });

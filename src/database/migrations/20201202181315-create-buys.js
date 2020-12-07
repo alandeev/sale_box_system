@@ -4,7 +4,7 @@ const { DataTypes } = require('sequelize');
 
 module.exports = {
   up: async (queryInterface) => {
-    await queryInterface.createTable('buys', {
+    await queryInterface.createTable('buys', { //carrinho de compras
       id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,

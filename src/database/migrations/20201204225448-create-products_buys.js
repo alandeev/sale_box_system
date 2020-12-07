@@ -10,6 +10,10 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true
       },
+      qtd: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
+      },
       product_id: {
         type: DataTypes.INTEGER,
         references: {
